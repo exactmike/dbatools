@@ -85,10 +85,10 @@ function Invoke-DbaQuery {
         PS C:\> Get-DbaDatabase -SqlInstance "server1", "server1\nordwind", "server2" | Invoke-DbaQuery -File "C:\scripts\sql\rebuild.sql"
 
         Runs the sql commands stored in rebuild.sql against all accessible databases of the instances "server1", "server1\nordwind" and "server2"
-        
+
     .EXAMPLE
         PS C:\> Invoke-DbaQuery -SqlInstance . -Query 'SELECT * FROM users WHERE Givenname = @name' -SqlParameters @{ Name = "Maria" }
-        
+
         Executes a simple query against the users table using SQL Parameters.
         This avoids accidental SQL Injection and is the safest way to execute queries with dynamic content.
         Keep in mind the limitations inherent in parameters - it is quite impossible to use them for content references.
@@ -170,7 +170,7 @@ function Invoke-DbaQuery {
                     }
                     "System.IO.FileInfo" {
                         if (-not $item.Exists) {
-                            Stop-Function -Message "Directory not found!" -Category ObjectNotFound
+                            Stop-Function -Message "File not found!" -Category ObjectNotFound
                             return
                         }
 
