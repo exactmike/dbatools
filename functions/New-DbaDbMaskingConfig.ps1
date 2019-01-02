@@ -1,7 +1,7 @@
 function New-DbaDbMaskingConfig {
     <#
     .SYNOPSIS
-        Generates a new data masking configuration file.
+        Generates a new data masking configuration file to be used with Invoke-DbaDbDataMasking
 
     .DESCRIPTION
         Generates a new data masking configuration file. This file is important to apply any data masking to the data in a database.
@@ -12,6 +12,7 @@ function New-DbaDbMaskingConfig {
         Computed
         Hierarchyid
         Geography
+        Geometry
         Xml
 
         Read more here:
@@ -171,6 +172,10 @@ function New-DbaDbMaskingConfig {
                         Write-Message -Level Verbose -Message "Skipping $columnobject because it is a geography column"
                         continue
                     }
+                    if ($columnobject.DataType.Name -eq 'geometry') {
+                        Write-Message -Level Verbose -Message "Skipping $columnobject because it is a geometry column"
+                        continue
+                    }
                     if ($columnobject.DataType.SqlDataType.ToString().ToLower() -eq 'xml') {
                         Write-Message -Level Verbose -Message "Skipping $columnobject because it is a xml column"
                         continue
@@ -206,6 +211,8 @@ function New-DbaDbMaskingConfig {
                                     MaxValue        = $columnLength
                                     MaskingType     = "Name"
                                     SubType         = "Firstname"
+                                    Deterministic   = $false
+                                    Nullable        = $columnobject.Nullable
                                 }
                             }
                             "lastname" {
@@ -217,6 +224,8 @@ function New-DbaDbMaskingConfig {
                                     MaxValue        = $columnLength
                                     MaskingType     = "Name"
                                     SubType         = "Lastname"
+                                    Deterministic   = $false
+                                    Nullable        = $columnobject.Nullable
                                 }
                             }
                             "creditcard" {
@@ -228,6 +237,8 @@ function New-DbaDbMaskingConfig {
                                     MaxValue        = $columnLength
                                     MaskingType     = "Finance"
                                     SubType         = "CreditcardNumber"
+                                    Deterministic   = $false
+                                    Nullable        = $columnobject.Nullable
                                 }
                             }
                             "address" {
@@ -239,6 +250,8 @@ function New-DbaDbMaskingConfig {
                                     MaxValue        = $columnLength
                                     MaskingType     = "Address"
                                     SubType         = "StreetAddress"
+                                    Deterministic   = $false
+                                    Nullable        = $columnobject.Nullable
                                 }
                             }
                             "city" {
@@ -250,6 +263,8 @@ function New-DbaDbMaskingConfig {
                                     MaxValue        = $columnLength
                                     MaskingType     = "Address"
                                     SubType         = "City"
+                                    Deterministic   = $false
+                                    Nullable        = $columnobject.Nullable
                                 }
                             }
                             "zipcode" {
@@ -261,6 +276,34 @@ function New-DbaDbMaskingConfig {
                                     MaxValue        = $columnLength
                                     MaskingType     = "Address"
                                     SubType         = "Zipcode"
+                                    Deterministic   = $false
+                                    Nullable        = $columnobject.Nullable
+                                }
+                            }
+                            "company" {
+                                $columns += [PSCustomObject]@{
+                                    Name            = $columnobject.Name
+                                    ColumnType      = $columnType
+                                    CharacterString = $null
+                                    MinValue        = $min
+                                    MaxValue        = $columnLength
+                                    MaskingType     = "Company"
+                                    SubType         = "CompanyName"
+                                    Deterministic   = $false
+                                    Nullable        = $columnobject.Nullable
+                                }
+                            }
+                            "username" {
+                                $columns += [PSCustomObject]@{
+                                    Name            = $columnobject.Name
+                                    ColumnType      = $columnType
+                                    CharacterString = $null
+                                    MinValue        = $min
+                                    MaxValue        = $columnLength
+                                    MaskingType     = "Internet"
+                                    SubType         = "UserName"
+                                    Deterministic   = $false
+                                    Nullable        = $columnobject.Nullable
                                 }
                             }
                         }
@@ -268,7 +311,9 @@ function New-DbaDbMaskingConfig {
                         $type = "Random"
 
                         switch ($columnType) {
-                            { $_ -in "bit", "bool" } {
+                            {
+                                $_ -in "bit", "bool"
+                            } {
                                 $subType = "Bool"
                                 $MaxValue = $null
                             }
@@ -308,6 +353,19 @@ function New-DbaDbMaskingConfig {
                                 $subType = "Number"
                                 $MaxValue = 255
                             }
+                            "varbinary" {
+                                $subType = "Byte"
+                                $MaxValue = $columnLength
+                            }
+                            "userdefineddatatype" {
+                                if ($columnLength -eq 1) {
+                                    $subType = "Bool"
+                                    $MaxValue = $columnLength
+                                } else {
+                                    $subType = "String"
+                                    $MaxValue = $columnLength
+                                }
+                            }
                             default {
                                 $subType = "String"
                                 $MaxValue = $columnLength
@@ -322,6 +380,8 @@ function New-DbaDbMaskingConfig {
                             MaxValue        = $MaxValue
                             MaskingType     = $type
                             SubType         = $subType
+                            Deterministic   = $false
+                            Nullable        = $columnobject.Nullable
                         }
                     }
                 }

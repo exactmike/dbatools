@@ -5395,7 +5395,10 @@
     {
         "Name":  "Disable-DbaTraceFlag",
         "Description":  "The function will disable a Trace Flag that is currently running globally on the SQL Server instance(s) listed",
-        "Tags":  "TraceFlag",
+        "Tags":  [
+                     "TraceFlag",
+                     "DBCC"
+                 ],
         "Synopsis":  "Disable a Global Trace Flag that is currently running",
         "Alias":  "",
         "Author":  "Garry Bargsley (@gbargsley), http://blog.garrybargsley.com",
@@ -5742,7 +5745,10 @@
     {
         "Name":  "Enable-DbaTraceFlag",
         "Description":  "The function will set one or multiple trace flags on the SQL Server instance(s) listed",
-        "Tags":  "TraceFlag",
+        "Tags":  [
+                     "TraceFlag",
+                     "DBCC"
+                 ],
         "Synopsis":  "Enable Global Trace Flag(s)",
         "Alias":  "",
         "Author":  "Garry Bargsley (@gbargsley), http://blog.garrybargsley.com",
@@ -11348,7 +11354,7 @@
         "CommandName":  "Get-DbaDbccProcCache",
         "Availability":  "Windows, Linux, macOS",
         "Links":  "https://dbatools.io/Get-DbaDbccProcCache",
-        "Examples":  "-------------------------- EXAMPLE 1 --------------------------\nPS C:\\\u003eGet-DbaDbccProcCache -SqlInstance Server1\nGet results of DBCC PROCCACHE for Instance Server1\n-------------------------- EXAMPLE 2 --------------------------\nPS C:\\\u003e\u0027Sql1\u0027,\u0027Sql2/sqlexpress\u0027 | Get-DbaDbccProcCache\nGet results of DBCC PROCCACHE for Instances Sql1 and Sql2/sqlexpress\n-------------------------- EXAMPLE 3 --------------------------\nPS C:\\\u003e$cred = Get-Credential sqladmin\nPS C:\\\u003e Get-DbaDbccProcCache -SqlInstance Server1 -SqlCredential $cred\nConnects using sqladmin credential and gets results of DBCC PROCCACHE for Instance Server1 using",
+        "Examples":  "-------------------------- EXAMPLE 1 --------------------------\nPS C:\\\u003eGet-DbaDbccProcCache -SqlInstance Server1\nGet results of DBCC PROCCACHE for Instance Server1\n-------------------------- EXAMPLE 2 --------------------------\nPS C:\\\u003e\u0027Sql1\u0027,\u0027Sql2/sqlexpress\u0027 | Get-DbaDbccProcCache\nGet results of DBCC PROCCACHE for Instances Sql1 and Sql2/sqlexpress\n-------------------------- EXAMPLE 3 --------------------------\nPS C:\\\u003e$cred = Get-Credential sqladmin\nPS C:\\\u003e Get-DbaDbccProcCache -SqlInstance Server1 -SqlCredential $cred\nConnects using sqladmin credential and gets results of DBCC PROCCACHE for Instance Server1",
         "Params":  [
                        [
                            "SqlInstance",
@@ -13455,7 +13461,7 @@
                            "SqlInstance",
                            "The target SQL Server instance or instances.",
                            "ServerInstance,SqlServer",
-                           true,
+                           false,
                            "true (ByValue)",
                            ""
                        ],
@@ -13492,6 +13498,14 @@
                            "False"
                        ],
                        [
+                           "InputObject",
+                           "A piped collection of database objects from Get-DbaDatabase",
+                           "",
+                           false,
+                           "true (ByValue)",
+                           ""
+                       ],
+                       [
                            "EnableException",
                            "By default, when something goes wrong we try to catch it, interpret it and give you a friendly warning message.\r\nThis avoids overwhelming you with \"sea of red\" exceptions, but is inconvenient because it basically disables advanced scripting.\r\nUsing this switch turns this \"nice by default\" feature off and enables you to catch exceptions with your own try/catch.",
                            "",
@@ -13500,7 +13514,7 @@
                            "False"
                        ]
                    ],
-        "Syntax":  "Get-DbaDbSpace [-SqlInstance] \u003cDbaInstanceParameter[]\u003e [[-SqlCredential] \u003cPSCredential\u003e] [[-Database] \u003cString[]\u003e] [[-ExcludeDatabase] \u003cString[]\u003e] [-IncludeSystemDBs] [-EnableException] [\u003cCommonParameters\u003e]"
+        "Syntax":  "Get-DbaDbSpace [[-SqlInstance] \u003cDbaInstanceParameter[]\u003e] [[-SqlCredential] \u003cPSCredential\u003e] [[-Database] \u003cString[]\u003e] [[-ExcludeDatabase] \u003cString[]\u003e] [-IncludeSystemDBs] [[-InputObject] \u003cDatabase[]\u003e] [-EnableException] [\u003cCommonParameters\u003e]"
     },
     {
         "Name":  "Get-DbaDbState",
@@ -14120,7 +14134,7 @@
                        [
                            "EnableException",
                            "By default, when something goes wrong we try to catch it, interpret it and give you a friendly warning message.\r\nThis avoids overwhelming you with \"sea of red\" exceptions, but is inconvenient because it basically disables advanced scripting.\r\nUsing this switch turns this \"nice by default\" feature off and enables you to catch exceptions with your own try/catch.",
-                           "Silent",
+                           "",
                            false,
                            "false",
                            "False"
@@ -19031,7 +19045,10 @@
     {
         "Name":  "Get-DbaTraceFlag",
         "Description":  "Returns Trace Flags that are enabled globally on each instance(s) of SQL Server as an object.",
-        "Tags":  "TraceFlag",
+        "Tags":  [
+                     "TraceFlag",
+                     "DBCC"
+                 ],
         "Synopsis":  "Get global Trace Flag(s) information for each instance(s) of SQL Server.",
         "Alias":  "",
         "Author":  "Kevin Bullen (@sqlpadawan)",
@@ -20345,7 +20362,7 @@
     },
     {
         "Name":  "Import-DbaCsv",
-        "Description":  "Import-DbaCsv takes advantage of .NET\u0027s super fast SqlBulkCopy class to import CSV files into SQL Server.\n\nThe entire import is performed within a transaction, so if a failure occurs or the script is aborted, no changes will persist.\n\nIf the table or view specified does not exist and -AutoCreateTable, it will be automatically created using slow and efficient but accomodating data types.",
+        "Description":  "Import-DbaCsv takes advantage of .NET\u0027s super fast SqlBulkCopy class to import CSV files into SQL Server.\n\nThe entire import is performed within a transaction, so if a failure occurs or the script is aborted, no changes will persist.\n\nIf the table or view specified does not exist and -AutoCreateTable, it will be automatically created using slow and efficient but accomodating data types.\n\nThis importer supports fields spanning multiple lines. The only restriction is that they must be quoted, otherwise it would not be possible to distinguish between malformed data and multi-line values.",
         "Tags":  [
                      "Migration",
                      "Import"
@@ -20527,6 +20544,110 @@
                            "False"
                        ],
                        [
+                           "Quote",
+                           "Defines the default quote character wrapping every field.",
+                           "",
+                           false,
+                           "false",
+                           "\""
+                       ],
+                       [
+                           "Escape",
+                           "Defines the default escape character letting insert quotation characters inside a quoted field.\nThe escape character can be the same as the quote character.",
+                           "",
+                           false,
+                           "false",
+                           "\""
+                       ],
+                       [
+                           "Comment",
+                           "Defines the default comment character indicating that a line is commented out. Default is #.",
+                           "",
+                           false,
+                           "false",
+                           "#"
+                       ],
+                       [
+                           "TrimmingOption",
+                           "Determines which values should be trimmed. Default is \"None\". Options are All, None, UnquotedOnly and QuotedOnly.",
+                           "",
+                           false,
+                           "false",
+                           "None"
+                       ],
+                       [
+                           "BufferSize",
+                           "Defines the default buffer size. The default BufferSize is 4096.",
+                           "",
+                           false,
+                           "false",
+                           "4096"
+                       ],
+                       [
+                           "ParseErrorAction",
+                           "By default, the parse error action throws an exception and ends the import.\nYou can also choose AdvanceToNextLine which basically ignores parse errors.",
+                           "",
+                           false,
+                           "false",
+                           "ThrowException"
+                       ],
+                       [
+                           "Encoding",
+                           "The encoding of the file.",
+                           "",
+                           false,
+                           "false",
+                           ""
+                       ],
+                       [
+                           "NullValue",
+                           "The value which denotes a DbNull-value.",
+                           "",
+                           false,
+                           "false",
+                           ""
+                       ],
+                       [
+                           "Threshold",
+                           "Defines the default value for Threshold indicating when the CsvReader should replace/remove consecutive null bytes.",
+                           "",
+                           false,
+                           "false",
+                           "60"
+                       ],
+                       [
+                           "MaxQuotedFieldLength",
+                           "The axmimum length (in bytes) for any quoted field.",
+                           "",
+                           false,
+                           "false",
+                           "0"
+                       ],
+                       [
+                           "SkipEmptyLine",
+                           "Skip empty lines.",
+                           "",
+                           false,
+                           "false",
+                           "False"
+                       ],
+                       [
+                           "SupportsMultiline",
+                           "Indicates if the importer should support multiline fields.",
+                           "",
+                           false,
+                           "false",
+                           "False"
+                       ],
+                       [
+                           "UseColumnDefault",
+                           "Use the column default values if the field is not in the record.",
+                           "",
+                           false,
+                           "false",
+                           "False"
+                       ],
+                       [
                            "EnableException",
                            "By default, when something goes wrong we try to catch it, interpret it and give you a friendly warning message.\r\nThis avoids overwhelming you with \"sea of red\" exceptions, but is inconvenient because it basically disables advanced scripting.\r\nUsing this switch turns this \"nice by default\" feature off and enables you to catch exceptions with your own try/catch.",
                            "",
@@ -20551,7 +20672,7 @@
                            ""
                        ]
                    ],
-        "Syntax":  "Import-DbaCsv [[-Path] \u003cObject[]\u003e] [-SqlInstance] \u003cDbaInstanceParameter[]\u003e [[-SqlCredential] \u003cPSCredential\u003e] [-Database] \u003cString\u003e [[-Table] \u003cString\u003e] [[-Schema] \u003cString\u003e] [-Truncate] [[-Delimiter] \u003cString\u003e] [-SingleColumn] [[-BatchSize] \u003cInt32\u003e] [[-NotifyAfter] \u003cInt32\u003e] [-TableLock] [-CheckConstraints] [-FireTriggers] [-KeepIdentity] [-KeepNulls] [[-Column] \u003cString[]\u003e] [[-ColumnMap] \u003cHashtable[]\u003e] [-AutoCreateTable] [-NoProgress] [-NoHeaderRow] [-EnableException] [-WhatIf] [-Confirm] [\u003cCommonParameters\u003e]"
+        "Syntax":  "Import-DbaCsv [[-Path] \u003cObject[]\u003e] [-SqlInstance] \u003cDbaInstanceParameter[]\u003e [[-SqlCredential] \u003cPSCredential\u003e] [-Database] \u003cString\u003e [[-Table] \u003cString\u003e] [[-Schema] \u003cString\u003e] [-Truncate] [[-Delimiter] \u003cChar\u003e] [-SingleColumn] [[-BatchSize] \u003cInt32\u003e] [[-NotifyAfter] \u003cInt32\u003e] [-TableLock] [-CheckConstraints] [-FireTriggers] [-KeepIdentity] [-KeepNulls] [[-Column] \u003cString[]\u003e] [[-ColumnMap] \u003cHashtable[]\u003e] [-AutoCreateTable] [-NoProgress] [-NoHeaderRow] [[-Quote] \u003cChar\u003e] [[-Escape] \u003cChar\u003e] [[-Comment] \u003cChar\u003e] [[-TrimmingOption] \u003cString\u003e] [[-BufferSize] \u003cInt32\u003e] [[-ParseErrorAction] \u003cString\u003e] \r\n[[-Encoding] \u003cEncoding\u003e] [[-NullValue] \u003cString\u003e] [[-Threshold] \u003cInt32\u003e] [[-MaxQuotedFieldLength] \u003cInt32\u003e] [-SkipEmptyLine] [-SupportsMultiline] [-UseColumnDefault] [-EnableException] [-WhatIf] [-Confirm] [\u003cCommonParameters\u003e]"
     },
     {
         "Name":  "Import-DbaPfDataCollectorSetTemplate",
@@ -22060,12 +22181,12 @@
     },
     {
         "Name":  "Invoke-DbaDbDataMasking",
-        "Description":  "Invoke-DbaDbDataMasking is able to generate random data for tables.\nIt will use a configuration file that can be made manually or generated using New-DbaDbMaskingConfig\n\nNote that the following column and data types are not currently supported:\nIdentity\nForeignKey\nComputed\nHierarchyid\nGeography\nXml",
+        "Description":  "TMasks data by using randomized values determined by a configuration file and a randomizer framework\n\nIt will use a configuration file that can be made manually or generated using New-DbaDbMaskingConfig\n\nNote that the following column and data types are not currently supported:\nIdentity\nForeignKey\nComputed\nHierarchyid\nGeography\nGeometry\nXml",
         "Tags":  [
                      "DataMasking",
                      "Database"
                  ],
-        "Synopsis":  "Invoke-DbaDbDataMasking generates random data for tables",
+        "Synopsis":  "Masks data by using randomized values determined by a configuration file and a randomizer framework",
         "Alias":  "",
         "Author":  "Sander Stad (@sqlstad, sqlstad.nl) | Chrissy LeMaire (@cl, netnerds.net)",
         "CommandName":  "Invoke-DbaDbDataMasking",
@@ -22170,6 +22291,22 @@
                            "0"
                        ],
                        [
+                           "ModulusFactor",
+                           "Calculating the next nullable by using the remainder from the modulus. Default is every 10.",
+                           "",
+                           false,
+                           "false",
+                           "10"
+                       ],
+                       [
+                           "ExactLength",
+                           "Mask string values to the same length. So \u0027Tate\u0027 will be replaced with 4 random characters.",
+                           "",
+                           false,
+                           "false",
+                           "False"
+                       ],
+                       [
                            "EnableException",
                            "By default, when something goes wrong we try to catch it, interpret it and give you a friendly warning message.\r\nThis avoids overwhelming you with \"sea of red\" exceptions, but is inconvenient because it basically disables advanced scripting.\r\nUsing this switch turns this \"nice by default\" feature off and enables you to catch exceptions with your own try/catch.",
                            "",
@@ -22194,7 +22331,7 @@
                            ""
                        ]
                    ],
-        "Syntax":  "Invoke-DbaDbDataMasking [[-SqlInstance] \u003cDbaInstanceParameter[]\u003e] [[-SqlCredential] \u003cPSCredential\u003e] [[-Database] \u003cString[]\u003e] [-FilePath] \u003cObject\u003e [[-Locale] \u003cString\u003e] [[-CharacterString] \u003cString\u003e] [[-Table] \u003cString[]\u003e] [[-Column] \u003cString[]\u003e] [[-ExcludeTable] \u003cString[]\u003e] [[-ExcludeColumn] \u003cString[]\u003e] [[-Query] \u003cString\u003e] [[-MaxValue] \u003cInt32\u003e] [-EnableException] [-WhatIf] [-Confirm] [\u003cCommonParameters\u003e]"
+        "Syntax":  "Invoke-DbaDbDataMasking [[-SqlInstance] \u003cDbaInstanceParameter[]\u003e] [[-SqlCredential] \u003cPSCredential\u003e] [[-Database] \u003cString[]\u003e] [-FilePath] \u003cObject\u003e [[-Locale] \u003cString\u003e] [[-CharacterString] \u003cString\u003e] [[-Table] \u003cString[]\u003e] [[-Column] \u003cString[]\u003e] [[-ExcludeTable] \u003cString[]\u003e] [[-ExcludeColumn] \u003cString[]\u003e] [[-Query] \u003cString\u003e] [[-MaxValue] \u003cInt32\u003e] [[-ModulusFactor] \u003cInt32\u003e] [-ExactLength] [-EnableException] [-WhatIf] [-Confirm] [\u003cCommonParameters\u003e]"
     },
     {
         "Name":  "Invoke-DbaDbDecryptObject",
@@ -25729,7 +25866,7 @@
         "CommandName":  "New-DbaAvailabilityGroup",
         "Availability":  "Windows, Linux, macOS",
         "Links":  "https://dbatools.io/New-DbaAvailabilityGroup",
-        "Examples":  "-------------------------- EXAMPLE 1 --------------------------\nPS C:\\\u003eNew-DbaAvailabilityGroup -Primary sql2016a -Name SharePoint\nCreates a new availability group on sql2016a named SharePoint\n-------------------------- EXAMPLE 2 --------------------------\nPS C:\\\u003eNew-DbaAvailabilityGroup -Primary sql2016a -Name SharePoint -Secondary sql2016b\nCreates a new availability group on sql2016b named SharePoint with a secondary replica, sql2016b\n-------------------------- EXAMPLE 3 --------------------------\nPS C:\\\u003eNew-DbaAvailabilityGroup -Primary sql2016std -Name BAG1 -Basic -Confirm:$false\nCreates a basic availability group named BAG1 on sql2016std and does not confirm when setting up\n-------------------------- EXAMPLE 4 --------------------------\nPS C:\\\u003eNew-DbaAvailabilityGroup -Primary sql2016b -Name AG1 -ClusterType Wsfc -Dhcp -Database db1 -UseLastBackup\nCreates an availability group on sql2016b with the name ag1. Uses the last backups available to add the database db1 to the AG.\n-------------------------- EXAMPLE 5 --------------------------\nPS C:\\\u003eNew-DbaAvailabilityGroup -Primary sql2017 -Name SharePoint -ClusterType None -FailoverMode Manual\nCreates a new availability group on sql2017 named SharePoint with a cluster type of none and a failover mode of manual\n-------------------------- EXAMPLE 6 --------------------------\nPS C:\\\u003eNew-DbaAvailabilityGroup -Primary sql1 -Secondary sql2 -Name ag1 -Database pubs -ClusterType None -SeedingMode Automatic -FailoverMode Manual\nCreates a new availability group with a primary replica on sql1 and a secondary on sql2. Automatically adds the database pubs.\n-------------------------- EXAMPLE 7 --------------------------\nPS C:\\\u003e$cred = Get-Credential sqladmin\nPS C:\\\u003e $params = @{\r\n\u003e\u003e Primary = \"sql1\"\r\n\u003e\u003e PrimarySqlCredential = $cred\r\n\u003e\u003e Secondary = \"sql2\"\r\n\u003e\u003e SecondarySqlCredential = $cred\r\n\u003e\u003e Name = \"test-ag\"\r\n\u003e\u003e Database = \"pubs\"\r\n\u003e\u003e ClusterType = \"None\"\r\n\u003e\u003e SeedingMode = \"Automatic\"\r\n\u003e\u003e FailoverMode = \"Manual\"\r\n\u003e\u003e Confirm = $false\r\n\u003e\u003e }\r\nPS C:\\\u003e New-DbaAvailabilityGroup @params\nThis exact command was used to create an availability group on docker!",
+        "Examples":  "-------------------------- EXAMPLE 1 --------------------------\nPS C:\\\u003eNew-DbaAvailabilityGroup -Primary sql2016a -Name SharePoint\nCreates a new availability group on sql2016a named SharePoint\n-------------------------- EXAMPLE 2 --------------------------\nPS C:\\\u003eNew-DbaAvailabilityGroup -Primary sql2016a -Name SharePoint -Secondary sql2016b\nCreates a new availability group on sql2016a named SharePoint with a secondary replica, sql2016b\n-------------------------- EXAMPLE 3 --------------------------\nPS C:\\\u003eNew-DbaAvailabilityGroup -Primary sql2016std -Name BAG1 -Basic -Confirm:$false\nCreates a basic availability group named BAG1 on sql2016std and does not confirm when setting up\n-------------------------- EXAMPLE 4 --------------------------\nPS C:\\\u003eNew-DbaAvailabilityGroup -Primary sql2016b -Name AG1 -ClusterType Wsfc -Dhcp -Database db1 -UseLastBackup\nCreates an availability group on sql2016b with the name ag1. Uses the last backups available to add the database db1 to the AG.\n-------------------------- EXAMPLE 5 --------------------------\nPS C:\\\u003eNew-DbaAvailabilityGroup -Primary sql2017 -Name SharePoint -ClusterType None -FailoverMode Manual\nCreates a new availability group on sql2017 named SharePoint with a cluster type of none and a failover mode of manual\n-------------------------- EXAMPLE 6 --------------------------\nPS C:\\\u003eNew-DbaAvailabilityGroup -Primary sql1 -Secondary sql2 -Name ag1 -Database pubs -ClusterType None -SeedingMode Automatic -FailoverMode Manual\nCreates a new availability group with a primary replica on sql1 and a secondary on sql2. Automatically adds the database pubs.\n-------------------------- EXAMPLE 7 --------------------------\nPS C:\\\u003e$cred = Get-Credential sqladmin\nPS C:\\\u003e $params = @{\r\n\u003e\u003e Primary = \"sql1\"\r\n\u003e\u003e PrimarySqlCredential = $cred\r\n\u003e\u003e Secondary = \"sql2\"\r\n\u003e\u003e SecondarySqlCredential = $cred\r\n\u003e\u003e Name = \"test-ag\"\r\n\u003e\u003e Database = \"pubs\"\r\n\u003e\u003e ClusterType = \"None\"\r\n\u003e\u003e SeedingMode = \"Automatic\"\r\n\u003e\u003e FailoverMode = \"Manual\"\r\n\u003e\u003e Confirm = $false\r\n\u003e\u003e }\r\nPS C:\\\u003e New-DbaAvailabilityGroup @params\nThis exact command was used to create an availability group on docker!",
         "Params":  [
                        [
                            "Primary",
@@ -27260,12 +27397,12 @@
     },
     {
         "Name":  "New-DbaDbMaskingConfig",
-        "Description":  "Generates a new data masking configuration file. This file is important to apply any data masking to the data in a database.\n\nNote that the following column and data types are not currently supported:\nIdentity\nForeignKey\nComputed\nHierarchyid\nGeography\nXml\n\nRead more here:\nhttps://sachabarbs.wordpress.com/2018/06/11/bogus-simple-fake-data-tool/\nhttps://github.com/bchavez/Bogus",
+        "Description":  "Generates a new data masking configuration file. This file is important to apply any data masking to the data in a database.\n\nNote that the following column and data types are not currently supported:\nIdentity\nForeignKey\nComputed\nHierarchyid\nGeography\nGeometry\nXml\n\nRead more here:\nhttps://sachabarbs.wordpress.com/2018/06/11/bogus-simple-fake-data-tool/\nhttps://github.com/bchavez/Bogus",
         "Tags":  [
                      "DataMasking",
                      "Database"
                  ],
-        "Synopsis":  "Generates a new data masking configuration file.",
+        "Synopsis":  "Generates a new data masking configuration file to be used with Invoke-DbaDbDataMasking",
         "Alias":  "",
         "Author":  "Sander Stad (@sqlstad, sqlstad.nl) | Chrissy LeMaire (@cl, netnerds.net)",
         "CommandName":  "New-DbaDbMaskingConfig",
@@ -28255,6 +28392,14 @@
                            ""
                        ],
                        [
+                           "PassThru",
+                           "Returns file object that was created during execution.",
+                           "",
+                           false,
+                           "false",
+                           "False"
+                       ],
+                       [
                            "EnableException",
                            "By default, when something goes wrong we try to catch it, interpret it and give you a friendly warning message.\r\nThis avoids overwhelming you with \"sea of red\" exceptions, but is inconvenient because it basically disables advanced scripting.\r\nUsing this switch turns this \"nice by default\" feature off and enables you to catch exceptions with your own try/catch.",
                            "Silent",
@@ -28279,7 +28424,7 @@
                            ""
                        ]
                    ],
-        "Syntax":  "New-DbatoolsSupportPackage [[-Path] \u003cString\u003e] [[-Variables] \u003cString[]\u003e] [-EnableException] [-WhatIf] [-Confirm] [\u003cCommonParameters\u003e]"
+        "Syntax":  "New-DbatoolsSupportPackage [[-Path] \u003cString\u003e] [[-Variables] \u003cString[]\u003e] [-PassThru] [-EnableException] [-WhatIf] [-Confirm] [\u003cCommonParameters\u003e]"
     },
     {
         "Name":  "New-DbaXESession",
@@ -28905,7 +29050,7 @@
         "CommandName":  "Publish-DbaDacPackage",
         "Availability":  "Windows, Linux, macOS",
         "Links":  "https://dbatools.io/Publish-DbaDacPackage",
-        "Examples":  "-------------------------- EXAMPLE 1 --------------------------\nPS C:\\\u003e$options = New-DbaDacOption -Type Dacpac -Action Publish\nPS C:\\\u003e $options.DeployOptions.DropObjectsNotInSource = $true\r\nPS C:\\\u003e Publish-DbaDacPackage -SqlInstance sql2016 -Database DB1 -DacOption $options -Path c:\\temp\\db.dacpac\nUses DacOption object to set Deployment Options and updates DB1 database on sql2016 from the db.dacpac dacpac file, dropping objects that are missing from source\n-------------------------- EXAMPLE 2 --------------------------\nPS C:\\\u003ePublish-DbaDacPackage -SqlInstance sql2017 -Database WideWorldImporters -Path C:\\temp\\sql2016-WideWorldImporters.dacpac -PublishXml C:\\temp\\sql2016-WideWorldImporters-publish.xml\nUpdates WideWorldImporters on sql2017 from the sql2016-WideWorldImporters.dacpac using the sql2016-WideWorldImporters-publish.xml publish profile\n-------------------------- EXAMPLE 3 --------------------------\nPS C:\\\u003eNew-DbaDacProfile -SqlInstance sql2016 -Database db2 -Path C:\\temp\nPS C:\\\u003e Export-DbaDacPackage -SqlInstance sql2016 -Database db2 | Publish-DbaDacPackage -PublishXml C:\\temp\\sql2016-db2-publish.xml -Database db1, db2 -SqlInstance sql2017\nCreates a publish profile at C:\\temp\\sql2016-db2-publish.xml, exports the .dacpac to $home\\Documents\\sql2016-db2.dacpac\r\nthen publishes it to the sql2017 server database db2\n-------------------------- EXAMPLE 4 --------------------------\nPS C:\\\u003e$loc = \"C:\\Users\\bob\\source\\repos\\Microsoft.Data.Tools.Msbuild\\lib\\net46\\Microsoft.SqlServer.Dac.dll\"\nPS C:\\\u003e Publish-DbaDacPackage -SqlInstance \"local\" -Database WideWorldImporters -Path C:\\temp\\WideWorldImporters.dacpac -PublishXml C:\\temp\\WideWorldImporters.publish.xml -DacFxPath $loc\n-------------------------- EXAMPLE 5 --------------------------\nPS C:\\\u003ePublish-DbaDacPackage -SqlInstance sql2017 -Database WideWorldImporters -Path C:\\temp\\sql2016-WideWorldImporters.dacpac -PublishXml C:\\temp\\sql2016-WideWorldImporters-publish.xml \r\n-GenerateDeploymentScript -ScriptOnly\nDoes not deploy the changes, but will generate the deployment script that would be executed against WideWorldImporters.\n-------------------------- EXAMPLE 6 --------------------------\nPS C:\\\u003ePublish-DbaDacPackage -SqlInstance sql2017 -Database WideWorldImporters -Path C:\\temp\\sql2016-WideWorldImporters.dacpac -PublishXml C:\\temp\\sql2016-WideWorldImporters-publish.xml \r\n-GenerateDeploymentReport -ScriptOnly\nDoes not deploy the changes, but will generate the deployment report that would be executed against WideWorldImporters.",
+        "Examples":  "-------------------------- EXAMPLE 1 --------------------------\nPS C:\\\u003e$options = New-DbaDacOption -Type Dacpac -Action Publish\nPS C:\\\u003e $options.DeployOptions.DropObjectsNotInSource = $true\r\nPS C:\\\u003e Publish-DbaDacPackage -SqlInstance sql2016 -Database DB1 -DacOption $options -Path c:\\temp\\db.dacpac\nUses DacOption object to set Deployment Options and updates DB1 database on sql2016 from the db.dacpac dacpac file, dropping objects that are missing from source.\n-------------------------- EXAMPLE 2 --------------------------\nPS C:\\\u003ePublish-DbaDacPackage -SqlInstance sql2017 -Database WideWorldImporters -Path C:\\temp\\sql2016-WideWorldImporters.dacpac -PublishXml C:\\temp\\sql2016-WideWorldImporters-publish.xml -Confirm\nUpdates WideWorldImporters on sql2017 from the sql2016-WideWorldImporters.dacpac using the sql2016-WideWorldImporters-publish.xml publish profile. Prompts for confirmation.\n-------------------------- EXAMPLE 3 --------------------------\nPS C:\\\u003eNew-DbaDacProfile -SqlInstance sql2016 -Database db2 -Path C:\\temp\nPS C:\\\u003e Export-DbaDacPackage -SqlInstance sql2016 -Database db2 | Publish-DbaDacPackage -PublishXml C:\\temp\\sql2016-db2-publish.xml -Database db1, db2 -SqlInstance sql2017\nCreates a publish profile at C:\\temp\\sql2016-db2-publish.xml, exports the .dacpac to $home\\Documents\\sql2016-db2.dacpac. Does not prompt for confirmation.\r\nthen publishes it to the sql2017 server database db2\n-------------------------- EXAMPLE 4 --------------------------\nPS C:\\\u003e$loc = \"C:\\Users\\bob\\source\\repos\\Microsoft.Data.Tools.Msbuild\\lib\\net46\\Microsoft.SqlServer.Dac.dll\"\nPS C:\\\u003e Publish-DbaDacPackage -SqlInstance \"local\" -Database WideWorldImporters -Path C:\\temp\\WideWorldImporters.dacpac -PublishXml C:\\temp\\WideWorldImporters.publish.xml -DacFxPath $loc -Confirm\nPublishes the dacpac using a specific dacfx library. Prompts for confirmation.\n-------------------------- EXAMPLE 5 --------------------------\nPS C:\\\u003ePublish-DbaDacPackage -SqlInstance sql2017 -Database WideWorldImporters -Path C:\\temp\\sql2016-WideWorldImporters.dacpac -PublishXml C:\\temp\\sql2016-WideWorldImporters-publish.xml \r\n-GenerateDeploymentScript -ScriptOnly\nDoes not deploy the changes, but will generate the deployment script that would be executed against WideWorldImporters.\n-------------------------- EXAMPLE 6 --------------------------\nPS C:\\\u003ePublish-DbaDacPackage -SqlInstance sql2017 -Database WideWorldImporters -Path C:\\temp\\sql2016-WideWorldImporters.dacpac -PublishXml C:\\temp\\sql2016-WideWorldImporters-publish.xml \r\n-GenerateDeploymentReport -ScriptOnly\nDoes not deploy the changes, but will generate the deployment report that would be executed against WideWorldImporters.",
         "Params":  [
                        [
                            "SqlInstance",
@@ -29026,9 +29171,25 @@
                            false,
                            "false",
                            ""
+                       ],
+                       [
+                           "WhatIf",
+                           "Shows what would happen if the command were to run. No actions are actually performed.",
+                           "wi",
+                           false,
+                           "false",
+                           ""
+                       ],
+                       [
+                           "Confirm",
+                           "Prompts you for confirmation before executing any changing operations within the command.",
+                           "cf",
+                           false,
+                           "false",
+                           ""
                        ]
                    ],
-        "Syntax":  "Publish-DbaDacPackage [-SqlInstance \u003cDbaInstanceParameter[]\u003e] [-SqlCredential \u003cPSCredential\u003e] -Path \u003cString\u003e -Database \u003cString[]\u003e [-ConnectionString \u003cString[]\u003e] [-ScriptOnly] [-Type \u003cString\u003e] [-OutputPath \u003cString\u003e] [-IncludeSqlCmdVars] [-DacOption \u003cObject\u003e] [-EnableException] [-DacFxPath \u003cString\u003e] [\u003cCommonParameters\u003e]\nPublish-DbaDacPackage [-SqlInstance \u003cDbaInstanceParameter[]\u003e] [-SqlCredential \u003cPSCredential\u003e] -Path \u003cString\u003e -PublishXml \u003cString\u003e -Database \u003cString[]\u003e [-ConnectionString \u003cString[]\u003e] [-GenerateDeploymentScript] [-GenerateDeploymentReport] [-ScriptOnly] [-Type \u003cString\u003e] [-OutputPath \u003cString\u003e] [-IncludeSqlCmdVars] [-EnableException] [-DacFxPath \u003cString\u003e] [\u003cCommonParameters\u003e]"
+        "Syntax":  "Publish-DbaDacPackage [-SqlInstance \u003cDbaInstanceParameter[]\u003e] [-SqlCredential \u003cPSCredential\u003e] -Path \u003cString\u003e -Database \u003cString[]\u003e [-ConnectionString \u003cString[]\u003e] [-ScriptOnly] [-Type \u003cString\u003e] [-OutputPath \u003cString\u003e] [-IncludeSqlCmdVars] [-DacOption \u003cObject\u003e] [-EnableException] [-DacFxPath \u003cString\u003e] [-WhatIf] [-Confirm] [\u003cCommonParameters\u003e]\nPublish-DbaDacPackage [-SqlInstance \u003cDbaInstanceParameter[]\u003e] [-SqlCredential \u003cPSCredential\u003e] -Path \u003cString\u003e -PublishXml \u003cString\u003e -Database \u003cString[]\u003e [-ConnectionString \u003cString[]\u003e] [-GenerateDeploymentScript] [-GenerateDeploymentReport] [-ScriptOnly] [-Type \u003cString\u003e] [-OutputPath \u003cString\u003e] [-IncludeSqlCmdVars] [-EnableException] [-DacFxPath \u003cString\u003e] [-WhatIf] [-Confirm] [\u003cCommonParameters\u003e]"
     },
     {
         "Name":  "Read-DbaAuditFile",
@@ -37263,7 +37424,7 @@
         "CommandName":  "Set-DbaSpn",
         "Availability":  "Windows only",
         "Links":  "https://dbatools.io/Set-DbaSpn",
-        "Examples":  "-------------------------- EXAMPLE 1 --------------------------\nPS C:\\\u003eSet-DbaSpn -SPN MSSQLSvc\\SQLSERVERA.domain.something -ServiceAccount domain\\account\nPS C:\\\u003e Set-DbaSpn -SPN MSSQLSvc\\SQLSERVERA.domain.something -ServiceAccount domain\\account -EnableException\nConnects to Active Directory and adds a provided SPN to the given account.\r\nConnects to Active Directory and adds a provided SPN to the given account, suppressing all error messages and throw exceptions that can be caught instead\n-------------------------- EXAMPLE 2 --------------------------\nPS C:\\\u003eSet-DbaSpn -SPN MSSQLSvc\\SQLSERVERA.domain.something -ServiceAccount domain\\account -Credential ad\\sqldba\nConnects to Active Directory and adds a provided SPN to the given account. Uses alternative account to connect to AD.\n-------------------------- EXAMPLE 3 --------------------------\nPS C:\\\u003eSet-DbaSpn -SPN MSSQLSvc\\SQLSERVERA.domain.something -ServiceAccount domain\\account -NoDelegation\nConnects to Active Directory and adds a provided SPN to the given account, without the delegation.\n-------------------------- EXAMPLE 4 --------------------------\nPS C:\\\u003eTest-DbaSpn -ComputerName sql2016 | Where { $_.isSet -eq $false } | Set-DbaSpn\nSets all missing SPNs for sql2016\n-------------------------- EXAMPLE 5 --------------------------\nPS C:\\\u003eTest-DbaSpn -ComputerName sql2016 | Where { $_.isSet -eq $false } | Set-DbaSpn -WhatIf\nDisplays what would happen trying to set all missing SPNs for sql2016",
+        "Examples":  "-------------------------- EXAMPLE 1 --------------------------\nPS C:\\\u003eSet-DbaSpn -SPN MSSQLSvc/SQLSERVERA.domain.something -ServiceAccount domain\\account\nPS C:\\\u003e Set-DbaSpn -SPN MSSQLSvc/SQLSERVERA.domain.something -ServiceAccount domain\\account -EnableException\nConnects to Active Directory and adds a provided SPN to the given account.\r\nConnects to Active Directory and adds a provided SPN to the given account, suppressing all error messages and throw exceptions that can be caught instead\n-------------------------- EXAMPLE 2 --------------------------\nPS C:\\\u003eSet-DbaSpn -SPN MSSQLSvc/SQLSERVERA.domain.something -ServiceAccount domain\\account -Credential ad\\sqldba\nConnects to Active Directory and adds a provided SPN to the given account. Uses alternative account to connect to AD.\n-------------------------- EXAMPLE 3 --------------------------\nPS C:\\\u003eSet-DbaSpn -SPN MSSQLSvc/SQLSERVERA.domain.something -ServiceAccount domain\\account -NoDelegation\nConnects to Active Directory and adds a provided SPN to the given account, without the delegation.\n-------------------------- EXAMPLE 4 --------------------------\nPS C:\\\u003eTest-DbaSpn -ComputerName sql2016 | Where { $_.isSet -eq $false } | Set-DbaSpn\nSets all missing SPNs for sql2016\n-------------------------- EXAMPLE 5 --------------------------\nPS C:\\\u003eTest-DbaSpn -ComputerName sql2016 | Where { $_.isSet -eq $false } | Set-DbaSpn -WhatIf\nDisplays what would happen trying to set all missing SPNs for sql2016",
         "Params":  [
                        [
                            "SPN",
@@ -42135,7 +42296,7 @@
                        ],
                        [
                            "Credential",
-                           "Windows Credential with permission to log on to the remote server. Must be specified for any remote connection.",
+                           "Windows Credential with permission to log on to the remote server.\r\nMust be specified for any remote connection if update Repository is located on a network folder.",
                            "",
                            false,
                            "false",
@@ -42206,6 +42367,14 @@
                            "50"
                        ],
                        [
+                           "Authentication",
+                           "Chooses an authentication protocol for remote connections.\r\nIf the protocol fails to establish a connection\nDefaults:\r\n* CredSSP when -Credential is specified - due to the fact that repository Path is usually a network share and credentials need to be passed to the remote host\r\n  to avoid the double-hop issue.\r\n* Default when -Credential is not specified. Will likely fail if a network path is specified.",
+                           "",
+                           false,
+                           "false",
+                           "Credssp"
+                       ],
+                       [
                            "EnableException",
                            "By default, when something goes wrong we try to catch it, interpret it and give you a friendly warning message.\r\nThis avoids overwhelming you with \"sea of red\" exceptions, but is inconvenient because it basically disables advanced scripting.\r\nUsing this switch turns this \"nice by default\" feature off and enables you to catch exceptions with your own try/catch.",
                            "",
@@ -42230,7 +42399,7 @@
                            ""
                        ]
                    ],
-        "Syntax":  "Update-DbaInstance [[-ComputerName] \u003cDbaInstanceParameter[]\u003e] [-Credential \u003cPSCredential\u003e] [-Version \u003cString[]\u003e] [-Type \u003cString[]\u003e] [-InstanceName \u003cString\u003e] [-Path \u003cString[]\u003e] [-Restart] [-Continue] [-Throttle \u003cInt32\u003e] [-EnableException] [-WhatIf] [-Confirm] [\u003cCommonParameters\u003e]\nUpdate-DbaInstance [[-ComputerName] \u003cDbaInstanceParameter[]\u003e] [-Credential \u003cPSCredential\u003e] -KB \u003cString[]\u003e [-InstanceName \u003cString\u003e] [-Path \u003cString[]\u003e] [-Restart] [-Continue] [-Throttle \u003cInt32\u003e] [-EnableException] [-WhatIf] [-Confirm] [\u003cCommonParameters\u003e]"
+        "Syntax":  "Update-DbaInstance [[-ComputerName] \u003cDbaInstanceParameter[]\u003e] [-Credential \u003cPSCredential\u003e] [-Version \u003cString[]\u003e] [-Type \u003cString[]\u003e] [-InstanceName \u003cString\u003e] [-Path \u003cString[]\u003e] [-Restart] [-Continue] [-Throttle \u003cInt32\u003e] [-Authentication \u003cString\u003e] [-EnableException] [-WhatIf] [-Confirm] [\u003cCommonParameters\u003e]\nUpdate-DbaInstance [[-ComputerName] \u003cDbaInstanceParameter[]\u003e] [-Credential \u003cPSCredential\u003e] -KB \u003cString[]\u003e [-InstanceName \u003cString\u003e] [-Path \u003cString[]\u003e] [-Restart] [-Continue] [-Throttle \u003cInt32\u003e] [-Authentication \u003cString\u003e] [-EnableException] [-WhatIf] [-Confirm] [\u003cCommonParameters\u003e]"
     },
     {
         "Name":  "Update-DbaServiceAccount",

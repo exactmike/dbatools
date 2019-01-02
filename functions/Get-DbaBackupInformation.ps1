@@ -271,11 +271,9 @@ function Get-DbaBackupInformation {
                 $Files = $Files | Where-Object {$_.FullName -notlike '*\LOG\*'}
             }
 
-            Write-Message -Level Verbose -Message "Reading backup headers of $($Files.Count) files"
-            try {
-                $FileDetails = Read-DbaBackupHeader -SqlInstance $server -Path $Files -AzureCredential $AzureCredential -EnableException
-            } catch {
-                Stop-Function -Message "Failure reading backup header" -ErrorRecord $_ -Target $server -Continue
+            if ($Files.Count -gt 0) {
+                Write-Message -Level Verbose -Message "Reading backup headers of $($Files.Count) files"
+                $FileDetails = Read-DbaBackupHeader -SqlInstance $server -Path $Files -AzureCredential $AzureCredential
             }
 
             $groupdetails = $FileDetails | Group-Object -Property BackupSetGUID
@@ -304,7 +302,7 @@ function Get-DbaBackupInformation {
                 $historyObject.End = [DateTime]$group.Group[0].BackupFinishDate
                 $historyObject.Duration = ([DateTime]$group.Group[0].BackupFinishDate - [DateTime]$group.Group[0].BackupStartDate)
                 $historyObject.Path = [string[]]$Group.Group.BackupPath
-                $historyObject.FileList = ($group.Group.FileList | Select-Object Type, LogicalName, PhysicalName)
+                $historyObject.FileList = ($group.Group.FileList | Select-Object Type, LogicalName, PhysicalName -Unique)
                 $historyObject.TotalSize = ($Group.Group.BackupSize.Byte | Measure-Object -Sum).Sum
                 $HistoryObject.CompressedBackupSize = ($Group.Group.CompressedBackupSize.Byte | Measure-Object -Sum).Sum
                 $historyObject.Type = $description
